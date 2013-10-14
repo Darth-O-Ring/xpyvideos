@@ -30,7 +30,7 @@ import os
 from getpass import getuser
 
 # Version number
-VERSION		=		'v0.0.2-1'
+VERSION		=		'v0.0.2-2'
 
 
 def build_opts():
@@ -88,15 +88,23 @@ def file_name(arg_f, URL):
 	URL	:	url of video to be downloaded
 
 	"""
-	# Split URL to grab video title if None
-	if arg_f == None:
-		return URL.split('/')[-1]
+	# Split URL to grab video title if None and from xhamster with .mp4
+	if arg_f is None and 'xhamster.com' in URL:
+		return ''.join((URL.split('/')[-1][:-5], '.mp4'))
 
-	# Otherwise return filename provided with -f/--filename
+	# Split URL to grab video title if None and from xvideos with .flv
+	elif arg_f is None and 'xvideos.com' in URL:
+		return ''.join((URL.split('/')[-1], '.flv'))
+
+	# Check for xvideos and return filename provided with .flv
+	elif arg_f is not None and 'xvideos.com' in URL:
+		return ''.join((arg_f, '.flv'))
+
+	# Otherwise it's xhamster and return filename provided with .mp4
 	else:
-		return arg_f
+		return ''.join((arg_f, '.mp4'))
 
-
+	
 def regex_for_video_link(HTML):
 	
 	"""
@@ -236,22 +244,6 @@ def download_video(args):
 	# Use regex to search html for the video link
 	video_file		=		regex_for_video_link(html)
 	
-	
-	# Call file_name and assign return value to filename variable
-	filename		=		file_name(args['f'], url)
-	
-	# Check for xvideos 
-	if 'xvideos.com' in url:
-	
-	# Add .flv to filename
-		filename		=		''.join((filename, '.flv'))
-
-	# Check for xhamster
-	elif 'xhamster.com' in url:
-
-	# Replace .html with .mp4 in the case of xhamster
-		filename		=		filename.replace('.html', '.mp4')
-
 	# Unquote video file URL
 	video_file		=		urllib2.unquote(video_file)
 
@@ -264,6 +256,9 @@ def download_video(args):
 	except (urllib2.URLError, urllib2.HTTPError):
 		print "\n\nError: Failed to open video link's URL.\n\n"
 		sys.exit(1)
+	
+	# Call file_name
+	filename		=		file_name(args['f'], url)
 	
 	# Call write_video_to_file for video downloading
 	write_video_to_file(args['dir'], video_file, filename) 
