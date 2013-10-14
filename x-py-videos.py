@@ -96,6 +96,7 @@ def file_name(arg_f, URL):
 	else:
 		return arg_f
 
+
 def regex_xvideos(HTML):
 	"""
 	Uses regular expression to search for flv file link.
@@ -113,19 +114,20 @@ def regex_xvideos(HTML):
 									# after ('flv_url=')
 									# This is the video link needed for download
 							
-							(url_)		# Match ('url_').  This marks the end of the video link
+							(amp)		# Match ('url_').  This marks the end of the video link
 
 								''', re.VERBOSE)
 
 	# Grab video link from three item tuple given by .groups()
 	# Handle valid URLs but invalid Xvideo URL errors, causing regex to return a None type, while searching html
 	try:
-		return reg_ex_for_link.search(HTML).groups()[1][:-4]
+		return reg_ex_for_link.search(HTML).groups()[1]
 
 	# Catch regex exception
 	except (AttributeError, IndexError):
 		print "\n\nError: None type returned.\nCheck that URL is valid: ('http://www.xvideos.com/remaining_link')\n\n"
 		sys.exit(2)
+
 
 def regex_xhamster(HTML):
 	"""
@@ -148,7 +150,7 @@ def regex_xhamster(HTML):
 								''', re.VERBOSE)
 
 	# Grab video link from three item tuple given by .groups()
-	# Handle valid URLs but invalid Xvideo URL errors, causing regex to return a None type, while searching html
+	# Handle valid URLs but invalid Xhamster URL errors, causing regex to return a None type, while searching html
 	try:
 		return reg_ex_for_link.search(HTML).groups()[1]
 
@@ -157,6 +159,7 @@ def regex_xhamster(HTML):
 		print """\n\nError: None type returned.\nCheck that URL is valid: ('http://www.xvideos/ORxhamster.com/remaining_link')
 				\n\n"""
 		sys.exit(2)
+
 
 def write_video_to_file(arg_dir, vid_file, f_name):
 	"""
@@ -274,9 +277,6 @@ def download_video(args):
 	# Print has finished downloading message
 	print "\n\n('{}'): has finished downloading.\n\n".format(filename[:-4])
 
-
-
-		
 
 def main():
 	"""
