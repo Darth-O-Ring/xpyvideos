@@ -269,10 +269,11 @@ def download_video(args):
 	video_file		=		urllib2.unquote(video_file)
 
 	# Open video file for downloading
+	# Handle any potential video link errors
 	try:
 		video_file		=		urllib2.urlopen(video_file)
 
-	
+	# Catch any potential URL errors while opening the video link for download
 	except (urllib2.URLError, urllib2.HTTPError):
 		print "\n\nError: Failed to open video link's URL.\n\n"
 		sys.exit(1)
