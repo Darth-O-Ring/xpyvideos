@@ -269,8 +269,14 @@ def download_video(args):
 	video_file		=		urllib2.unquote(video_file)
 
 	# Open video file for downloading
-	video_file		=		urllib2.urlopen(video_file)
+	try:
+		video_file		=		urllib2.urlopen(video_file)
 
+	
+	except (urllib2.URLError, urllib2.HTTPError):
+		print "\n\nError: Failed to open video link's URL.\n\n"
+		sys.exit(1)
+	
 	# Call write_video_to_file for video downloading
 	write_video_to_file(args['dir'], video_file, filename) 
 
