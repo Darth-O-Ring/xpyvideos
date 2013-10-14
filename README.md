@@ -11,4 +11,4 @@ Options:
 
 Example usage:
 
-python2 x-py-videos.py -u http://www.xvideos.com/remaining_link -f xvideo_movie -dir /home/user/
+python2 x-py-videos.py -u http://www.xvideos.com/remaining_link -f xvideo_movie -dir /home/user/video_directory/
