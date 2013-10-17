@@ -165,6 +165,8 @@ def regex_for_video_link(HTML):
 
 	# Use regular expression to search html for video's url
 	reg_ex_for_link		=		re.compile(r'''
+									# For xvideos flv link:
+
 									# Don't match beginning of html
 							flv_url=	# Start matching once 'flv_url=' is found
 							
@@ -176,6 +178,8 @@ def regex_for_video_link(HTML):
 							
 							|		# Mutually exclusive pattern.  Match above or below.
 
+									# For xhamster mp4 link:
+
 							mp4File=	# Start matching at 'mp4File='
 
 							(\S+?)		# Group one or more non-whitespace characters in a
@@ -184,7 +188,8 @@ def regex_for_video_link(HTML):
 
 							"		# Stop matching here.  This marks the end of the video link
 							
-							|
+							|		
+									# The same as above but for redtube mp4 link:
 
 							mp4_url=
 
