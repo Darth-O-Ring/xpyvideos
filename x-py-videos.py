@@ -30,7 +30,7 @@ import os
 from getpass import getuser
 
 # Version number
-VERSION		=		'v0.0.2-2'
+VERSION		=		'v0.0.2-3'
 
 
 def build_opts():
@@ -38,22 +38,21 @@ def build_opts():
 	Builds and returns a parser object of command line arguments
 	
 	"""
-	parser		=		argparse.ArgumentParser(description='Xvideos download options.')
+	parser		=		argparse.ArgumentParser(description='X-Py-Videos command line options.')
 
 	# Add url option
 	parser.add_argument('-u', '--url', type=str, required=True, help='url of video to download(Required).',
-				metavar='url of video(Required).'
+				metavar=''
 				)
 
 	# Add directory option
 	parser.add_argument('-dir', '--directory', type=str, default='/home/{}'.format(getuser()), required=False,
-				help='Directory to download video in(Optional).',
-				metavar='Directory for video storage(Default=/home/user).'
+				help='Directory to download video in(Optional).', metavar=''
 				)
 
 	# Add filename option
 	parser.add_argument('-f', '--filename', type=str, required=False, help='Filename of video desired(Optional).',
-				metavar='Filename of video(Default=original video title).'
+				metavar=''
 				)
 
 	# Return parser
@@ -79,7 +78,46 @@ def arg_parser(parser):
 		}
 
 
-def file_name(arg_f, URL):
+def regex_for_name(HTML):
+	"""
+	Uses regular expression to search through the html of redtube
+		in order to find the video title
+		and replace whitespaces with '_'
+
+	HTML	:	html of video link
+
+	"""
+
+	# Compile pattern to look for in HTML
+	regex_name		=		re.compile(r'''
+
+							slidePanelMovable">	# Start matching here.  This is where the video title 										      # is.
+
+							\s*			# Match any possible whitespace before the title
+
+							(\D+?)			# Match one or more non digit characters.
+										# This is where the video title is.
+										# Non-greedy so trailing whitespace doesn't appear
+
+							\s*			# Match any possible whitespace at the end
+										# of the video title.
+
+							</h1>			# This is the end of the video titel.
+							
+							''', re.VERBOSE)
+
+	# Search HTML and substitute whitespace characters
+	# Handle possible errors that may occur
+	try:
+		return ''.join((re.sub(r'\s+', '_', regex_name.search(HTML).groups()[0]), '.mp4'))
+
+	# Catch exceptions when regex returns a None type
+	except (AttributeError, IndexError):
+		print '\n\nError: Could not find video title in html.\n\n'
+		sys.exit(1)
+
+
+def file_name(arg_f, URL, HTML):
 	"""
 	Assigns and returns a filename.
 
@@ -87,7 +125,10 @@ def file_name(arg_f, URL):
 
 	URL	:	url of video to be downloaded
 
+	HTML	:	html to search in the case of redtube for video title
+
 	"""
+
 	# Split URL to grab video title if None and from xhamster with .mp4
 	if arg_f is None and 'xhamster.com' in URL:
 		return ''.join((URL.split('/')[-1][:-5], '.mp4'))
@@ -95,10 +136,18 @@ def file_name(arg_f, URL):
 	# Split URL to grab video title if None and from xvideos with .flv
 	elif arg_f is None and 'xvideos.com' in URL:
 		return ''.join((URL.split('/')[-1], '.flv'))
+	
+	# Check for redtube and return a filename from the video title if -f/--filename is None
+	elif arg_f is None and 'redtube.com' in URL:
+		return regex_for_name(HTML)
 
 	# Check for xvideos and return filename provided with .flv
 	elif arg_f is not None and 'xvideos.com' in URL:
 		return ''.join((arg_f, '.flv'))
+
+	# Check for redtube and return filename provided
+	elif arg_f is not None and 'redtube.com' in URL:
+		return ''.join((arg_f, '.mp4'))
 
 	# Otherwise it's xhamster and return filename provided with .mp4
 	else:
@@ -134,6 +183,15 @@ def regex_for_video_link(HTML):
 									# This is the video link needed for download.
 
 							"		# Stop matching here.  This marks the end of the video link
+							
+							|
+
+							mp4_url=
+
+							(\S+?)
+
+							flv_
+
 
 							''', re.VERBOSE)
 
@@ -142,20 +200,31 @@ def regex_for_video_link(HTML):
 	try:
 
 	# Check for where in the tuple the link is
-			if reg_ex_for_link.search(HTML).groups()[0] is None:
+			if reg_ex_for_link.search(HTML).groups()[0] is None and reg_ex_for_link.search(HTML).groups()[1] is None:
+
+	# Return redtube link
+				return reg_ex_for_link.search(HTML).groups()[2]
+
+			elif reg_ex_for_link.search(HTML).groups()[0] is None and reg_ex_for_link.search(HTML).groups()[2] is None:
+
+	# Return xhamster link		
 				return reg_ex_for_link.search(HTML).groups()[1]
+			
 			else:
+
+	# Return xvideos link
 				return reg_ex_for_link.search(HTML).groups()[0]
 
 	# Catch regex exception
 	except (AttributeError, IndexError):
 		print """\n\nError: None type returned.\n
-				Check that URL is valid: ('http://www.xvideos_OR_xhamster.com/remaining_link')\n\n"""
+				Check that URL is valid: ('http://www.website.com/remaining_link')\n\n"""
 		sys.exit(2)
 
 
 def write_video_to_file(arg_dir, vid_file, f_name):
 	"""
+	
 	Opens and writes video to file and displays 
 		progress bar during download.
 
@@ -209,11 +278,17 @@ def write_video_to_file(arg_dir, vid_file, f_name):
 
 	# Catch open/write exceptions
 	except IOError:
-		print "\n\nError: Failed on: ('{0}').\nCheck that: ('{1}'), is a valid pathname.\n".format(arg_dir, 
-													pathname[:-len(f_name)])
+		print """\n\nError: Failed on: ('{0}').\nCheck that: ('{1}'), is a valid pathname.\n
+				Or that ('{2}') is a valid filename.\n\n""".format(arg_dir, pathname[:-len(f_name)], f_name)
 		sys.exit(2)
+
 	except BufferError:
 		print '\n\nError: Failed on writing buffer.\nFailed to write video to file.\n\n'
+		sys.exit(1)
+
+	except KeyboardInterrupt:
+		print "\n\nInterrupt signal given.\nDeleting incomplete video ('{}').\n\n".format(f_name)
+		os.remove(pathname)
 		sys.exit(1)
 
 
@@ -237,7 +312,7 @@ def download_video(args):
 
 	# Catch URL exceptions
 	except (urllib2.URLError, urllib2.HTTPError):
-		print """\n\nError: Check that URL is valid: ('http://www.xvideos_OR_xhamster.com/remaining_link')
+		print """\n\nError: Check that URL is valid: ('http://www.website.com/remaining_link')
 				\nFailed on: ('{}')\n\n""".format(url)
 		sys.exit(2)
 	
@@ -258,7 +333,7 @@ def download_video(args):
 		sys.exit(1)
 	
 	# Call file_name
-	filename		=		file_name(args['f'], url)
+	filename		=		file_name(args['f'], url, html)
 	
 	# Call write_video_to_file for video downloading
 	write_video_to_file(args['dir'], video_file, filename) 
