@@ -188,9 +188,9 @@ def regex_for_video_link(HTML):
 
 							"		# Stop matching here.  This marks the end of the video link
 							
-							|		
-									# The same as above but for redtube mp4 link:
+							|		# Mutually exclusive pattern
 
+									# The same as above but for redtube mp4 link:
 							mp4_url=
 
 							(\S+?)
