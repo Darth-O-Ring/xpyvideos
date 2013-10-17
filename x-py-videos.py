@@ -197,7 +197,6 @@ def regex_for_video_link(HTML):
 
 							flv_
 
-
 							''', re.VERBOSE)
 
 	# Return video link from two item tuple returned by .groups()
