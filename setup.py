@@ -1,7 +1,8 @@
 import sys, os, shutil
 from distutils.core import setup, Extension
+from setuptools import find_packages
 
-shutil.copyfile("xpyvideos.py", "X-Py-Videos/xpyvideos.py")
+shutil.copyfile("xpyvideos.py", "x-py-videos/xpyvideos.py")
 
 setup(name		=		'x-py-videos',
       version		=		'0.0.2-4',
@@ -9,9 +10,9 @@ setup(name		=		'x-py-videos',
       author		=		'Darth_O-Ring',
       author_email	=		'darthoring@gmail.com',
       url		=		'https://github.com/Darth-O-Ring/X-Py-Videos',
-      packages		=		['xpyvideos'],
-      package_dir	=		{'xpyvideos' : 'X-Py-Videos/'},
-      scripts		=		['X-Py-Videos/xpyvideos.py'],
+      packages		=		find_packages(),
+      package_dir	=		{'xpyvideos' : 'x-py-videos/'},
+      scripts		=		['xpyvideos.py'],
       data_files	=		[('share/xpyvideos', ['README.md', 'NOTICE'])]
 	)
 
