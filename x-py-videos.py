@@ -26,7 +26,7 @@ from download import *
 from opts import *
 
 # Version number
-VERSION		=		'v0.0.2-3'
+VERSION		=		'v0.0.2-4'
 
 
 def main():
