@@ -1,11 +1,10 @@
-
 import sys, os, shutil
 from distutils.core import setup
 from setuptools import find_packages
 
 shutil.copyfile("xpyvideos.py", "xpyvideos/xpyvideos.py")
 
-setup(name		=		'x-py-videos',
+setup(name		=		'xpyvideos',
       version		=		'0.0.2-4',
       description	=		'Python program for downloading videos from xvideos, xhamster, and redtube.',
       author		=		'Darth_O-Ring',
