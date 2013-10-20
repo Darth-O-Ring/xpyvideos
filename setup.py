@@ -11,7 +11,7 @@ setup(name		=		'x-py-videos',
       author_email	=		'darthoring@gmail.com',
       url		=		'https://github.com/Darth-O-Ring/X-Py-Videos',
       packages		=		find_packages(),
-      package_dir	=		{'xpyvideos' : 'x-py-videos/'},
+      package_dir	=		{'xpyvideos' : 'x-py-videos'},
       scripts		=		['xpyvideos.py'],
       data_files	=		[('share/xpyvideos', ['README.md', 'NOTICE'])]
 	)
