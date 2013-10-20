@@ -1,6 +1,6 @@
 import sys, os, shutil
-from distutils.core import Extension
-from setuptools import find_packages, setup
+from distutils.core import setup
+from setuptools import find_packages
 
 shutil.copyfile("xpyvideos.py", "x-py-videos/xpyvideos.py")
 
