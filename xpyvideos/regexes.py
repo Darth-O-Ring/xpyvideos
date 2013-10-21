@@ -114,7 +114,8 @@ def regex_for_name(HTML):
 
 							\s*			# Match any possible whitespace before the title
 
-							(\D+?)			# Match one or more non digit characters.
+							(\d*?\D+?)		# Match zero or more digits if any or match
+										# one or more non digit characters.
 										# This is where the video title is.
 										# Non-greedy so trailing whitespace doesn't appear
 
