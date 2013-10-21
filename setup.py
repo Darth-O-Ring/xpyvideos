@@ -1,7 +1,8 @@
 #!/usr/bin/env python2
 
 import shutil
-from setuptools import setup, find_packages
+from distutils.core import setup
+from setuptools import find_packages
 
 shutil.copyfile("xpyvideos.py", "xpyvideos/xpyvideos")
 
@@ -10,7 +11,7 @@ setup(name		=		'xpyvideos',
       description	=		'Python program for downloading videos from xvideos, xhamster, and redtube.',
       author		=		'Darth_O-Ring',
       author_email	=		'darthoring@gmail.com',
-      url		=		'https://github.com/Darth-O-Ring/X-Py-Videos',
+      url		=		'https://github.com/Darth-O-Ring/xpyvideos',
       packages		=		find_packages(),
       package_dir	=		{'xpyvideos' : 'xpyvideos'},
       scripts		=		['xpyvideos.py'],
