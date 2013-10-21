@@ -13,7 +13,8 @@ setup(name		=		'xpyvideos',
       url		=		'https://github.com/Darth-O-Ring/xpyvideos',
       packages		=		find_packages(),
       package_dir	=		{'xpyvideos' : 'xpyvideos/'},
-      scripts		=		['xpyvideos/xpyvideos.py'],
+      scripts		=		['xpyvideos/xpyvideos.py', 'xpyvideos/regexes.py', 'xpyvideos/download.py',
+      						'xpyvideos/opts.py', 'xpyvideos/filename.py'],
       data_files	=		[('share/xpyvideos', ['README.md', 'NOTICE'])]
 	)
 
