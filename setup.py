@@ -1,10 +1,9 @@
 #!/usr/bin/env python2
 
 import shutil
-from distutils.core import setup
-from setuptools import find_packages
+from setuptools import setup, find_packages
 
-shutil.copyfile("xpyvideos.py", "xpyvideos/xpyvideos.py")
+shutil.copyfile("xpyvideos.py", "xpyvideos/xpyvideos")
 
 setup(name		=		'xpyvideos',
       version		=		'0.0.2-4',
@@ -13,8 +12,7 @@ setup(name		=		'xpyvideos',
       author_email	=		'darthoring@gmail.com',
       url		=		'https://github.com/Darth-O-Ring/X-Py-Videos',
       packages		=		find_packages(),
-      package_dir	=		{'xpyvideos' : 'xpyvideos'},
-      scripts		=		['xpyvideos/xpyvideos.py'],
+      scripts		=		['xpyvideos.py'],
       data_files	=		[('share/xpyvideos', ['README.md', 'NOTICE'])]
 	)
 
