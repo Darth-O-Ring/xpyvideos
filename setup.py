@@ -1,4 +1,6 @@
-import sys, os, shutil
+#!/usr/bin/env python2
+
+import shutil
 from distutils.core import setup
 from setuptools import find_packages
 
@@ -12,7 +14,7 @@ setup(name		=		'xpyvideos',
       url		=		'https://github.com/Darth-O-Ring/X-Py-Videos',
       packages		=		find_packages(),
       package_dir	=		{'xpyvideos' : 'xpyvideos'},
-      scripts		=		['xpyvideos.py'],
+      scripts		=		['xpyvideos/xpyvideos.py'],
       data_files	=		[('share/xpyvideos', ['README.md', 'NOTICE'])]
 	)
 
