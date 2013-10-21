@@ -1,5 +1,6 @@
 #!/usr/bin/env python2
 
+import xpyvideos
 import shutil
 from distutils.core import setup
 from setuptools import find_packages
