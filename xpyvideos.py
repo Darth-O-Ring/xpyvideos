@@ -22,8 +22,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 # Imports
-from download import *
-from opts import *
+try:
+	from download import *
+	from opts import *
+except ImportError:
+	import site
+	import sys
+	sys.path.append('/'.join([site.getsitepackages()[0], 'xpyvideos']))
+	from download import *
+	from opts import *
 
 # Version number
 VERSION		=		'v0.0.2-4'
