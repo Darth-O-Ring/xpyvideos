@@ -27,7 +27,7 @@ from opts import *
 
 
 # Version number
-VERSION		=		'v0.0.2-5'
+VERSION		=		'v0.0.2-6'
 
 
 def main():
