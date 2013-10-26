@@ -1,7 +1,6 @@
 # Imports
 import argparse
-from getpass import getuser
-
+from os import getcwd
 
 
 # Author and licensing
@@ -33,12 +32,12 @@ def build_opts():
 	parser		=		argparse.ArgumentParser(description='X-Py-Videos command line options.')
 
 	# Add url option
-	parser.add_argument('-u', '--url', type=str, required=True, help='url of video to download(Required).',
+	parser.add_argument('url', type=str, help='url of video to download(Required).',
 				metavar=''
 				)
 
 	# Add directory option
-	parser.add_argument('-dir', '--directory', type=str, default='/home/{}'.format(getuser()), required=False,
+	parser.add_argument('-dir', '--directory', type=str, default=getcwd(), required=False,
 				help='Directory to download video in(Optional).', metavar=''
 				)
 
