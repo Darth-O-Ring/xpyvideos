@@ -3,6 +3,7 @@
 import xpyvideos
 from distutils.core import setup
 from setuptools import find_packages
+from os import remove
 
 
 setup(name		=		'xpyvideos',
@@ -17,5 +18,8 @@ setup(name		=		'xpyvideos',
       						'xpyvideos/filename.py'],
       data_files	=		[('share/xpyvideos', ['README.md', 'NOTICE'])]
 	)
-
-
+print '\n\nCleaning up...\n\n'
+try:
+	remove('/usr/bin/opts.py')
+except:
+	pass
