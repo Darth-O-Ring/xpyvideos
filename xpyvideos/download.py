@@ -1,7 +1,10 @@
 # Imports
-import os
-import sys
-import urllib2
+from os.path import abspath, isfile
+from os.path import join as path_join
+from os import remove
+from sys import exit
+from urllib2 import urlopen, unquote, URLError, HTTPError
+from time import time
 from regexes import regex_for_video_link
 from filename import file_name
 
@@ -39,13 +42,23 @@ def write_video_to_file(arg_dir, vid_file, f_name):
 
 	"""
 
+	# Open video file for downloading
+	# Handle any potential video link errors
+	try:
+		vid_file		=		urlopen(vid_file)
+
+	# Catch any potential URL errors while opening the video link for download
+	except (URLError, HTTPError):
+		print "\n\nError: Failed to open video link's URL.\n\n"
+		exit(1)
+
 	# Join directory and filename
-	pathname		=		os.path.abspath(os.path.join(arg_dir, f_name))
+	pathname		=		abspath(path_join(arg_dir, f_name))
 
 	# Check for conflicting filenames
-	if os.path.isfile(pathname):
+	if isfile(pathname):
 		print "\n\nError: Conflicting filename: ('{}').\nDownload aborted.\n\n".format(f_name)
-		sys.exit(1)
+		exit(1)
 
 	# Grab byte info
 	meta			=		vid_file.info()
@@ -57,8 +70,9 @@ def write_video_to_file(arg_dir, vid_file, f_name):
 	# Handle file opening/writing errors
 	try:
 		with open(pathname, 'wb') as output:
-			print "\nDownloading: '{0}' (Bytes: {1})\n\n".format(f_name, file_size)
-			
+			print "\nDownloading: '{0}' (Bytes: {1} | Megabytes: {2:.1f})\n\n".format(f_name, file_size, 
+													file_size/1024/1024.0)
+			start		=		time()
 
 	# Start loop to display progress bar
 			while True:
@@ -77,8 +91,11 @@ def write_video_to_file(arg_dir, vid_file, f_name):
 				output.write(buffer)
 
 	# Set download status for display using raw string
-				status		=		r'{:10d} [{:3.2f}%]'.format(file_size_dl, 
-												file_size_dl * 100.0 / file_size)
+				status		=		r'{0:10d} | {1:.1f}MB [{2:3.2f}%]  {3:.1f}Mb/s'.format(file_size_dl, 
+												file_size_dl/1024/1024.0,
+												file_size_dl * 100.0 / file_size,
+												float(file_size_dl*8/2**20)/(time()
+														- start))
 
 	# Update status 
 				status		=		status + chr(8) * (len(status)+1)
@@ -88,18 +105,18 @@ def write_video_to_file(arg_dir, vid_file, f_name):
 
 	# Catch open/write exceptions
 	except IOError:
-		print """\n\nError: Failed on: ('{0}').\nCheck that: ('{1}'), is a valid pathname.\n
-				Or that ('{2}') is a valid filename.\n\n""".format(arg_dir, pathname[:-len(f_name)], f_name)
-		sys.exit(2)
+		print """\n\nError: Failed on: ('{0}').\nCheck that: ('{1}'), is a valid pathname.
+				\nOr that ('{2}') is a valid filename.\n\n""".format(arg_dir, pathname[:-len(f_name)], f_name)
+		exit(2)
 
 	except BufferError:
 		print '\n\nError: Failed on writing buffer.\nFailed to write video to file.\n\n'
-		sys.exit(1)
+		exit(1)
 
 	except KeyboardInterrupt:
 		print "\n\nInterrupt signal given.\nDeleting incomplete video ('{}').\n\n".format(f_name)
-		os.remove(pathname)
-		sys.exit(1)
+		remove(pathname)
+		exit(1)
 
 
 def download_video(args):
@@ -118,30 +135,20 @@ def download_video(args):
 	# Open url and grab html information
 	# Handle invalid URL errors
 	try:
-		html			=		urllib2.urlopen(url).read()
+		html			=		urlopen(url).read()
 
 	# Catch URL exceptions
-	except (urllib2.URLError, urllib2.HTTPError):
+	except (URLError, HTTPError):
 		print """\n\nError: Check that URL is valid: ('http://www.website.com/remaining_link')
 				\nFailed on: ('{}')\n\n""".format(url)
-		sys.exit(2)
+		exit(2)
 	
 	# Use regex to search html for the video link
 	video_file		=		regex_for_video_link(html)
 	
 	# Unquote video file URL
-	video_file		=		urllib2.unquote(video_file)
+	video_file		=		unquote(video_file)
 
-	# Open video file for downloading
-	# Handle any potential video link errors
-	try:
-		video_file		=		urllib2.urlopen(video_file)
-
-	# Catch any potential URL errors while opening the video link for download
-	except (urllib2.URLError, urllib2.HTTPError):
-		print "\n\nError: Failed to open video link's URL.\n\n"
-		sys.exit(1)
-	
 	# Call file_name
 	filename		=		file_name(args['f'], url, html)
 	
