@@ -1,6 +1,6 @@
 # Imports
 import re
-import sys
+from sys import exit
 
 
 
@@ -94,7 +94,7 @@ def regex_for_video_link(HTML):
 	except (AttributeError, IndexError):
 		print """\n\nError: None type returned.\n
 				Check that URL is valid: ('http://www.website.com/remaining_link')\n\n"""
-		sys.exit(2)
+		exit(2)
 
 
 def regex_for_name(HTML):
@@ -133,4 +133,4 @@ def regex_for_name(HTML):
 	# Catch exceptions when regex returns a None type
 	except (AttributeError, IndexError):
 		print '\n\nError: Could not find video title in html.\n\n'
-		sys.exit(1)
+		exit(1)
