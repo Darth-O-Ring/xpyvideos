@@ -6,7 +6,7 @@ from setuptools import find_packages
 
 
 setup(name		=		'xpyvideos',
-      version		=		'0.0.2-4',
+      version		=		'0.0.2-7',
       description	=		'Python program for downloading videos from xvideos, xhamster, and redtube.',
       author		=		'Darth_O-Ring',
       author_email	=		'darthoring@gmail.com',
@@ -14,7 +14,7 @@ setup(name		=		'xpyvideos',
       packages		=		find_packages(),
       package_dir	=		{'xpyvideos' : 'xpyvideos/'},
       scripts		=		['xpyvideos/xpyvideos.py', 'xpyvideos/regexes.py', 'xpyvideos/download.py',
-      						'xpyvideos/opts.py', 'xpyvideos/filename.py'],
+      						'xpyvideos/filename.py'],
       data_files	=		[('share/xpyvideos', ['README.md', 'NOTICE'])]
 	)
 
