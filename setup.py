@@ -18,8 +18,8 @@ setup(name		=		'xpyvideos',
       						'xpyvideos/filename.py'],
       data_files	=		[('share/xpyvideos', ['README.md', 'NOTICE'])]
 	)
-print '\n\nCleaning up...\n\n'
 try:
 	remove('/usr/bin/opts.py')
+	print '\n\nCleaning up...\n\n'
 except:
 	pass
