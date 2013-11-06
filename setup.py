@@ -12,7 +12,7 @@ pathname		=		getcwd()
 copyfile("xpyvideos.py", "xpyvideos/xpyvideos")
 
 setup(name		=		'xpyvideos',
-      version		=		'0.0.2-7',
+      version		=		'0.0.2-8',
       description	=		'Python program for downloading videos from xvideos, xhamster, and redtube.',
       author		=		'Darth_O-Ring',
       author_email	=		'darthoring@gmail.com',
