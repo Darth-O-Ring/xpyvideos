@@ -1,14 +1,15 @@
 #!/usr/bin/env python2
-
-import xpyvideos
 from distutils.core import setup
-from setuptools import find_packages
 from os import remove
 from os.path import abspath
 from os.path import join as path_join
 from os import getcwd
+from shutil import copyfile, rmtree
+from os import remove
 
 pathname		=		getcwd()
+
+copyfile("xpyvideos.py", "xpyvideos/xpyvideos")
 
 setup(name		=		'xpyvideos',
       version		=		'0.0.2-7',
@@ -16,25 +17,26 @@ setup(name		=		'xpyvideos',
       author		=		'Darth_O-Ring',
       author_email	=		'darthoring@gmail.com',
       url		=		'https://github.com/Darth-O-Ring/xpyvideos',
-      packages		=		find_packages(),
+      packages		=		['xpyvideos'],
       package_dir	=		{'xpyvideos' : 'xpyvideos/'},
-      scripts		=		['xpyvideos/xpyvideos.py', 'xpyvideos/regexes.py', 'xpyvideos/download.py',
-      						'xpyvideos/filename.py'],
-      data_files	=		[('share/xpyvideos', ['README.md', 'NOTICE'])]
+      scripts		=		['xpyvideos/xpyvideos'],
+      data_files	=		[('share/xpyvideos', ['README.md', 'NOTICE'])],
+
 	)
 
+files		=		['/usr/bin/opts.py', '/usr/bin/filename.py', '/usr/bin/download.py', '/usr/bin/regexes.py',
+					'/usr/bin/xpyvideos.py', 'xpyvideos/xpyvideos']
+
+for i in xrange(len(files)):
+	try:
+		if '/usr/bin/' in files[i]:
+			remove(abspath(files[i]))
+		else:
+			remove(abspath(path_join(pathname, files[i])))
+	except:
+		pass
 
 try:
-	remove(abspath('/usr/bin/opts.py'))
-except:
-	pass
-
-try:
-	remove(abspath(path_join(pathname, 'build/scripts-2.7/opts.py')))
-except:
-	pass
-
-try:
-	remove(abspath(path_join(pathname, 'build/lib/xpyvideos/opts.py')))
+	rmtree(abspath(path_join(pathname, 'build/')))
 except:
 	pass
