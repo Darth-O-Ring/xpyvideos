@@ -29,7 +29,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 # Version number
-VERSION		=		'v0.0.2-7'
+VERSION		=		'v0.0.2-8'
 
 
 def build_opts():
