@@ -43,7 +43,6 @@ def menu(lst):
 	"""
 	# Assign an empty list for mapping user input to list item
 	item_count	=		1
-	print '\n'
 
 	# Print out items in original list to screen
 	for i in xrange(len(lst)):
