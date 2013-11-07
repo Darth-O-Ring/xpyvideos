@@ -13,7 +13,8 @@ Options:
 
 url(Positional argument)
 
--f/--filename(Default: video title | video format's extension is added automatically -- youtube videos have format options chosen at  			runtime)
+-f/--filename(Default: video title | video format's extension is added automatically -- youtube videos have format 
+		options chosen at runtime)
 
 -dir/--directory(Default: current working directory)
 
