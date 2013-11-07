@@ -13,9 +13,9 @@ Options:
 
 url(Positional argument)
 
--f/--filename
+-f/--filename(Default: video title | video format's extension is added automatically -- youtube videos have format options chosen at  			runtime)
 
--dir/--directory
+-dir/--directory(Default: current working directory)
 
 -c(Only for youtube videos) (Convert video to mp3 file)
 
