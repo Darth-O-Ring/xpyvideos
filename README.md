@@ -11,7 +11,7 @@ https://github.com/NFicano/pytube.git
 
 Options:
 
-url(Positional argument)
+url(Positional Argument)
 
 -f/--filename(Default: video title | video format's extension is added automatically -- youtube videos have format 
 		options chosen at runtime)
