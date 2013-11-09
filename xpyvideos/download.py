@@ -91,11 +91,16 @@ def write_video_to_file(arg_dir, vid_file, f_name):
 				output.write(buffer)
 
 	# Set download status for display using raw string
-				status		=		r'{0:10d} | {1:.1f}MB [{2:3.2f}%]  {3:.1f}Mb/s'.format(file_size_dl, 
+				try:
+					status		=		r'{0:10d} | {1:.1f}MB [{2:3.2f}%]  {3:.1f}Mb/s'.format(
+												file_size_dl, 
 												file_size_dl/1024/1024.0,
 												file_size_dl * 100.0 / file_size,
 												float(file_size_dl*8/2**20)/(time()
 														- start))
+	# Catch error caused in Windows
+				except ZeroDivisionError:
+					continue
 
 	# Update status 
 				status		=		status + chr(8) * (len(status)+1)
@@ -153,7 +158,7 @@ def download_video(args):
 	filename		=		file_name(args['f'], url, html)
 	
 	# Call write_video_to_file for video downloading
-	write_video_to_file(args['dir'], video_file, filename) 
+	write_video_to_file(args['dir'], video_file, filename)
 
 	# Print has finished downloading message
 	print "\n\n('{}'): has finished downloading.\n\n".format(filename[:-4])
