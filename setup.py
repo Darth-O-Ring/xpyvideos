@@ -1,4 +1,5 @@
 #!/usr/bin/env python2
+
 from distutils.core import setup
 from os import remove
 from os.path import abspath
@@ -6,6 +7,7 @@ from os.path import join as path_join
 from os import getcwd
 from shutil import copyfile, rmtree
 from os import remove
+
 
 pathname		=		getcwd()
 
@@ -18,7 +20,7 @@ setup(name		=		'xpyvideos',
       author_email	=		'darthoring@gmail.com',
       url		=		'https://github.com/Darth-O-Ring/xpyvideos',
       packages		=		['xpyvideos'],
-      package_dir	=		{'xpyvideos' : 'xpyvideos/'},
+      package_dir	=		{'xpyvideos' : abspath(path_join(pathname, 'xpyvideos/'))},
       scripts		=		['xpyvideos/xpyvideos'],
       data_files	=		[('share/xpyvideos', ['README.md', 'NOTICE'])],
 
