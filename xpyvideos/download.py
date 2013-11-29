@@ -36,9 +36,9 @@ def write_video_to_file(arg_dir, vid_file, f_name):
 	Opens and writes video to file and displays 
 		progress bar during download.
 
+	arg_dir		:	-dir/--directory value
 	vid_file	:	open video file
 	f_name		:	filename
-	arg_dir		:	-dir/--directory value
 
 	"""
 
