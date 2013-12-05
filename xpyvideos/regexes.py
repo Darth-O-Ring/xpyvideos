@@ -110,7 +110,7 @@ def regex_for_name(HTML):
 	# Compile pattern to look for in HTML
 	regex_name		=		re.compile(r'''
 
-							slidePanelMovable">	# Start matching here.  This is where the video title 										      # is.
+							videoTitle">		# Start matching here.  This is where the video title 										      # is.
 
 							\s*			# Match any possible whitespace before the title
 
