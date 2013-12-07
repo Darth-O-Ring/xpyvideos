@@ -29,7 +29,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 # Version number
-VERSION		=		'v0.0.2-8'
+VERSION		=		'v0.0.2-9'
 
 
 def build_opts():
@@ -56,7 +56,7 @@ def build_opts():
 
 	# Adding conversion option
 	parser.add_argument('-c', action="store_true", default=False, required=False,
-				help='video to mp3 conversion of video using ffmpeg(Optional).' 
+				help='Video to mp3 conversion using ffmpeg(Optional).' 
 				)
 
 	# Add delete original option
