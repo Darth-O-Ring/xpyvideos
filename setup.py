@@ -8,18 +8,22 @@ from os import getcwd
 from shutil import copyfile, rmtree
 from os import remove
 
+import xpyvideos
+
 
 pathname		=		getcwd()
 
 copyfile("xpyvideos.py", "xpyvideos/xpyvideos")
 
-setup(name		=		'xpyvideos',
+packages        =       ['xpyvideos', 'xpyvideos.packages', 'xpyvideos.packages.pytube']
+
+setup(name		    =		'xpyvideos',
       version		=		'0.0.2-9',
       description	=		'Python program for downloading videos from xvideos, xhamster, and redtube.',
       author		=		'Darth_O-Ring',
       author_email	=		'darthoring@gmail.com',
-      url		=		'https://github.com/Darth-O-Ring/xpyvideos',
-      packages		=		['xpyvideos'],
+      url		    =		'https://github.com/Darth-O-Ring/xpyvideos',
+      packages		=		packages,
       package_dir	=		{'xpyvideos' : abspath(path_join(pathname, 'xpyvideos/'))},
       scripts		=		['xpyvideos/xpyvideos'],
       data_files	=		[('share/xpyvideos', ['README.md', 'NOTICE'])],
