@@ -7,9 +7,9 @@ from sys import exit
 from os import remove
 from os.path import abspath
 from os.path import join as path_join
-from pytube.api import YouTube
-from pytube.utils import print_status
-from pytube.exceptions import *
+from .packages.pytube.api import YouTube
+from .packages.pytube.utils import print_status
+from .packages.pytube.exceptions import MultipleObjectsReturned, YouTubeError
 
 
 # Author and licensing
