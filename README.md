@@ -5,9 +5,7 @@ X-Py-Videos
 X-Py-Videos is a program written in Python that allows for the downloading
 of videos from the websites www.xvideos.com, www.xhamster.com, www.redtube.com, and www.youtube.com.
 
-YouTube support depends on:
-
-https://github.com/NFicano/pytube.git
+The Pytube library is now included by default in packages.
 
 Options:
 
