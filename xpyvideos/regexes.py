@@ -1,7 +1,8 @@
 # Imports
+from __future__ import print_function
 import re
 from sys import exit
-
+from os.path import isfile
 
 
 # Author and licensing
@@ -36,39 +37,38 @@ def regex_for_video_link(HTML):
 
 	# Use regular expression to search html for video's url
 	reg_ex_for_link		=		re.compile(r'''
-									# For xvideos flv link:
-
-									# Don't match beginning of html
-							flv_url=	# Start matching once 'flv_url=' is found
+									            # For xvideos flv link:
+									            # Don't match beginning of html
+							    flv_url=	    # Start matching once 'flv_url=' is found
 							
-							(\S+?)		# Group one or more non-whitespace characters 
-									# in a non-greedy way so only one link is found
-									# This is the video link needed for download
+							    (\S+?)		    # Group one or more non-whitespace characters 
+									            # in a non-greedy way so only one link is found
+									            # This is the video link needed for download
 							
-							amp		# Stop matching here.  This marks the end of the video link
+							    amp		        # Stop matching here.  This marks the end of the video link
 							
-							|		# Mutually exclusive pattern.  Match above or below.
+							    |		        # Mutually exclusive pattern.  Match above or below.
 
-									# For xhamster mp4 link:
+									            # For xhamster mp4 link:
 
-							mp4File=	# Start matching at 'mp4File='
+							    \s+file=["]	    # Start matching at 'mp4File='
 
-							(\S+?)		# Group one or more non-whitespace characters in a
-									# non-greedy way so only one link is found
-									# This is the video link needed for download.
+							    (\S+?)		    # Group one or more non-whitespace characters in a
+									            # non-greedy way so only one link is found
+									            # This is the video link needed for download.
 
-							"		# Stop matching here.  This marks the end of the video link
+							    "		        # Stop matching here.  This marks the end of the video link
 							
-							|		# Mutually exclusive pattern
+							    |		        # Mutually exclusive pattern
 
-									# The same as above but for redtube mp4 link:
-							mp4_url=
+									            # The same as above but for redtube mp4 link:
+							    mp4_url=
 
-							(\S+?)
+							    (\S+?)
 
-							flv_
+							    flv_
 
-							''', re.VERBOSE)
+							    ''', re.VERBOSE)
 
 	# Return video link from two item tuple returned by .groups()
 	# Handle valid URLs but invalid Xvideo/Xhamster URL errors, causing regex to return a None type, while searching html
@@ -92,8 +92,7 @@ def regex_for_video_link(HTML):
 
 	# Catch regex exception
 	except (AttributeError, IndexError):
-		print """\n\nError: None type returned.\n
-				Check that URL is valid: ('http://www.website.com/remaining_link')\n\n"""
+		print ("\n\nError: None type returned.\nCheck that URL is valid: ('http://www.website.com/remaining_link')\n\n")
 		exit(2)
 
 
@@ -132,5 +131,5 @@ def regex_for_name(HTML):
 
 	# Catch exceptions when regex returns a None type
 	except (AttributeError, IndexError):
-		print '\n\nError: Could not find video title in html.\n\n'
+		print ('\n\nError: Could not find video title in html.\n\n')
 		exit(1)
