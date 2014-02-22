@@ -1,6 +1,7 @@
 #!/usr/bin/env python2
 
 # Imports
+from __future__ import print_function
 import argparse
 from os import getcwd
 from xpyvideos.download import *
@@ -29,7 +30,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 # Version number
-VERSION		=		'v0.0.2-9'
+VERSION		=		'v0.0.3-0'
 
 
 def build_opts():
@@ -111,7 +112,7 @@ def main():
 
 if __name__	==	'__main__':
 	# Display program name/author info 
-	print '\nX-Py-Videos {0} by: {1} Running...\n'.format(VERSION, __Author__)
+	print('\nX-Py-Videos {0} by: {1} Running...\n'.format(VERSION, __Author__))
 
+    # Call main()
 	main()
-
