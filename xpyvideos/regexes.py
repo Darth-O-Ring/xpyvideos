@@ -9,7 +9,7 @@ from os.path import isfile
 __Author__ = "Darth_O-Ring"
 __Email__ = "darthoring@gmail.com"
 __License__ = """
-Copyright (C) 2013-2015  Darth_O-Ring	<darthoring@gmail.com>
+Copyright (C) 2013-2015  Darth_O-Ring   <darthoring@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -27,109 +27,109 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 def regex_for_video_link(HTML):
-	
-	"""
-	Uses regular expression to search for flv file link.
+    
+    """
+    Uses regular expression to search for flv file link.
 
-	HTML	:	html returned by .read()
+    HTML    :   html returned by .read()
 
-	"""
+    """
 
-	# Use regular expression to search html for video's url
-	reg_ex_for_link		=		re.compile(r'''
-									            # For xvideos flv link:
-									            # Don't match beginning of html
-							    flv_url=	    # Start matching once 'flv_url=' is found
-							
-							    (\S+?)		    # Group one or more non-whitespace characters 
-									            # in a non-greedy way so only one link is found
-									            # This is the video link needed for download
-							
-							    amp		        # Stop matching here.  This marks the end of the video link
-							
-							    |		        # Mutually exclusive pattern.  Match above or below.
+    # Use regular expression to search html for video's url
+    reg_ex_for_link     =       re.compile(r'''
+                                                # For xvideos flv link:
+                                                # Don't match beginning of html
+                                flv_url=        # Start matching once 'flv_url=' is found
+                            
+                                (\S+?)          # Group one or more non-whitespace characters 
+                                                # in a non-greedy way so only one link is found
+                                                # This is the video link needed for download
+                            
+                                amp             # Stop matching here.  This marks the end of the video link
+                            
+                                |               # Mutually exclusive pattern.  Match above or below.
 
-									            # For xhamster mp4 link:
+                                                # For xhamster mp4 link:
 
-							    \s+file=["]	    # Start matching at 'mp4File='
+                                \s+file=["]     # Start matching at 'file="'
 
-							    (\S+?)		    # Group one or more non-whitespace characters in a
-									            # non-greedy way so only one link is found
-									            # This is the video link needed for download.
+                                (\S+?)          # Group one or more non-whitespace characters in a
+                                                # non-greedy way so only one link is found
+                                                # This is the video link needed for download.
 
-							    "		        # Stop matching here.  This marks the end of the video link
-							
-							    |		        # Mutually exclusive pattern
+                                "               # Stop matching here.  This marks the end of the video link
+                            
+                                |               # Mutually exclusive pattern
 
-									            # The same as above but for redtube mp4 link:
-							    mp4_url=
+                                                # The same as above but for redtube mp4 link:
+                                mp4_url=
 
-							    (\S+?)
+                                (\S+?)
 
-							    flv_
+                                flv_
 
-							    ''', re.VERBOSE)
+                                ''', re.VERBOSE)
 
-	# Return video link from two item tuple returned by .groups()
-	# Handle valid URLs but invalid Xvideo/Xhamster URL errors, causing regex to return a None type, while searching html
-	try:
+    # Return video link from two item tuple returned by .groups()
+    # Handle valid URLs but invalid Xvideo/Xhamster URL errors, causing regex to return a None type, while searching html
+    try:
 
-	# Check for where in the tuple the link is
-			if reg_ex_for_link.search(HTML).groups()[0] is None and reg_ex_for_link.search(HTML).groups()[1] is None:
+    # Check for where in the tuple the link is
+            if reg_ex_for_link.search(HTML).groups()[0] is None and reg_ex_for_link.search(HTML).groups()[1] is None:
 
-	# Return redtube link
-				return reg_ex_for_link.search(HTML).groups()[2]
+    # Return redtube link
+                return reg_ex_for_link.search(HTML).groups()[2]
 
-			elif reg_ex_for_link.search(HTML).groups()[0] is None and reg_ex_for_link.search(HTML).groups()[2] is None:
+            elif reg_ex_for_link.search(HTML).groups()[0] is None and reg_ex_for_link.search(HTML).groups()[2] is None:
 
-	# Return xhamster link		
-				return reg_ex_for_link.search(HTML).groups()[1]
-			
-			else:
+    # Return xhamster link      
+                return reg_ex_for_link.search(HTML).groups()[1]
+            
+            else:
 
-	# Return xvideos link
-				return reg_ex_for_link.search(HTML).groups()[0]
+    # Return xvideos link
+                return reg_ex_for_link.search(HTML).groups()[0]
 
-	# Catch regex exception
-	except (AttributeError, IndexError):
-		print ("\n\nError: None type returned.\nCheck that URL is valid: ('http://www.website.com/remaining_link')\n\n")
-		exit(2)
+    # Catch regex exception
+    except (AttributeError, IndexError):
+        print ("\n\nError: None type returned.\nCheck that URL is valid: ('http://www.website.com/remaining_link')\n\n")
+        exit(2)
 
 
 def regex_for_name(HTML):
-	"""
-	Uses regular expression to search through the html of redtube
-		in order to find the video title
-		and replace whitespaces with '_'
+    """
+    Uses regular expression to search through the html of redtube
+    in order to find the video title
+    and replace whitespaces with '_'
 
-	HTML	:	html of video link
+    HTML    :   html of video link
 
-	"""
+    """
 
-	# Compile pattern to look for in HTML
-	regex_name		=		re.compile(r'''
+    # Compile pattern to look for in HTML
+    regex_name      =       re.compile(r'''
 
-							videoTitle">		# Start matching here.  This is where the video title 										      # is.
+                            videoTitle">        # Start matching here.  This is where the video title is.
 
-							\s*			# Match any possible whitespace before the title
+                            \s*                 # Match any possible whitespace before the title
 
-							(.+?)			# Match anycharacter if one or more exist.
-										# This is where the video title is.
-										# Non-greedy so trailing whitespace doesn't appear
+                            (.+?)               # Match anycharacter if one or more exist.
+                                                # This is where the video title is.
+                                                # Non-greedy so trailing whitespace doesn't appear
 
-							\s*			# Match any possible whitespace at the end
-										# of the video title.
+                            \s*                 # Match any possible whitespace at the end
+                                                # of the video title.
 
-							</h1>			# This is the end of the video titel.
-							
-							''', re.VERBOSE)
+                            </h1>               # This is the end of the video titel.
+                            
+                            ''', re.VERBOSE)
 
-	# Search HTML and substitute whitespace characters
-	# Handle possible errors that may occur
-	try:
-		return ''.join((re.sub(r'\s+', '_', regex_name.search(HTML).groups()[0]), '.mp4'))
+    # Search HTML and substitute whitespace characters
+    # Handle possible errors that may occur
+    try:
+        return ''.join((re.sub(r'\s+', '_', regex_name.search(HTML).groups()[0]), '.mp4'))
 
-	# Catch exceptions when regex returns a None type
-	except (AttributeError, IndexError):
-		print ('\n\nError: Could not find video title in html.\n\n')
-		exit(1)
+    # Catch exceptions when regex returns a None type
+    except (AttributeError, IndexError):
+        print ('\n\nError: Could not find video title in html.\n\n')
+        exit(1)
