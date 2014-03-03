@@ -29,3 +29,7 @@ sudo python2 setup.py install
 Example usage:
 
 xpyvideos http://www.xvideos.com/remaining_link -f xvideo_movie -dir xvideo_stash/
+
+if using multiple links and filenames:
+
+xpyvideos http:www.xvideos.com/remaining_link,http:www.youtube.com/video_id -f xvideo_movie,youtube_movie -dir video_stash
