@@ -19,7 +19,7 @@ copyfile("xpyvideos.py", "xpyvideos/xpyvideos")
 packages        =       ['xpyvideos', 'xpyvideos.packages', 'xpyvideos.packages.pytube']
 
 setup(name		    =		'xpyvideos',
-      version		=		'0.0.3-0',
+      version		=		'0.0.3-1',
       description	=		'Python program for downloading videos from xvideos, xhamster, and redtube.',
       author		=		'Darth_O-Ring',
       author_email	=		'darthoring@gmail.com',
@@ -48,6 +48,11 @@ for i in prev_eggs:
         remove(i)
     except:
         pass
+
+try:
+    remove('/usr/lib/python2.7/site-packages/xpyvideos-0.0.3_0-py2.7.egg-info')
+except:
+    pass
 
 try:
 	rmtree(abspath(path_join(pathname, 'build/')))
