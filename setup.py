@@ -52,7 +52,7 @@ for i in prev_eggs:
     try:
         temp        =       i.split('/')[-1].split('-')
         
-        if temp[1] < VERSION:
+        if temp[1] < VERSION.replace('-', '_'):
             remove(i)
 
     except:
