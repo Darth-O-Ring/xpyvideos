@@ -1,4 +1,7 @@
+from __future__ import print_function
 import re
+from time import time
+
 
 
 def safe_filename(text, max_length=200):
@@ -28,7 +31,7 @@ def safe_filename(text, max_length=200):
     return truncate(filename)
 
 
-def print_status(progress, file_size):
+def print_status(progress, file_size, megabytes, start_time):
     """
     This function - when passed as `on_progress` to `Video.download` - prints
     out the current download progress.
@@ -39,6 +42,7 @@ def print_status(progress, file_size):
     """
 
     percent = progress * 100. / file_size
-    status = r"{0:10d}  [{1:3.2f}%]".format(progress, percent)
+    status = r"{0:10d}  Bytes | {1:.1f} MB [{2:3.2f}%]    {3:.2f} Mb/s".format(progress, megabytes, percent,
+                                                                                float(progress*8/2**20)/(time() - start_time))
     status = status + chr(8) * (len(status) + 1)
-    print status,
+    print(status, end=' ')

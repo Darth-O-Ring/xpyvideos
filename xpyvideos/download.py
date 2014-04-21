@@ -78,7 +78,7 @@ def write_video_to_file(arg_dir, vid_file, f_name):
             while True:
 
     # Read video files's block size into buffer
-                buffer      =       vid_file.read(block_size)
+                buffer          =       vid_file.read(block_size)
 
     # Break if empty buffer
                 if not buffer:
@@ -92,12 +92,12 @@ def write_video_to_file(arg_dir, vid_file, f_name):
 
     # Set download status for display using raw string
                 try:
-                    status      =       r'{0:10d} Bytes | {1:.1f}MB [{2:3.2f}%]  {3:.1f} Mb/{4}'.format(
+                    status      =       r'{0:10d} Bytes | {1:.1f}MB [{2:3.2f}%]   {3:.2f} Mb/s'.format(
                                                 file_size_dl, 
                                                 file_size_dl/1024/1024.0,
                                                 file_size_dl * 100.0 / file_size,
                                                 float(file_size_dl*8/2**20)/(time()
-                                                        - start), 's')
+                                                        - start))
     # Catch error caused in Windows
                 except ZeroDivisionError:
                     continue
@@ -106,7 +106,7 @@ def write_video_to_file(arg_dir, vid_file, f_name):
                 status      =       status + chr(8) * (len(status)+1)
 
     # Print status to screen
-                print(status, end='')
+                print(status, end=' ')
     
 
     # Catch open/write exceptions
