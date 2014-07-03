@@ -33,3 +33,11 @@ Example usage:
     if using multiple links and filenames:
 
     xpyvideos http:www.xvideos.com/remaining_link,http:www.youtube.com/video_id -f xvideo_movie,youtube_movie -dir video_stash
+
+Donations:
+
+    Bitcoins:
+        1L8f3TLjsKroxnYras6XCKm6oAKaJzGxav
+
+    Litecoins:
+        LSGpMdWUpdWSw4HWJAwp3ppyPZZEBp3wLS
