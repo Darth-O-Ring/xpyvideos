@@ -42,7 +42,8 @@ def build_opts():
     parser      =       argparse.ArgumentParser(description='X-Py-Videos command line options.')
 
     # Add url option
-    parser.add_argument('url', type=str, help='url of video to download(Required).\nIf using multiple urls use a comma delimiter.  Ex: <link1,link2,link3>',
+    parser.add_argument('url', type=str,
+                help='url of video to download(Required).\nIf using multiple urls use a comma delimiter.  Ex: <link1,link2,link3>',
                 metavar=''
                 )
 
@@ -52,7 +53,7 @@ def build_opts():
                 )
 
     # Add filename option
-    parser.add_argument('-f', '--filename', type=str, default=None, required=False,
+    parser.add_argument('-f', '--filename', type=str, nargs='+', default=None, required=False,
                 help='Filename of video desired(Optional).\nIf using multiple names use a comma delimiter.  Ex: <name1,name2,name3>',
                 metavar=''
                 )
@@ -86,7 +87,7 @@ def arg_parser(parser):
     # Build and return dictionary
     return {'u'     :   args.url.split(',')
             ,'dir'  :   args.directory
-            ,'f'    :   args.filename.split(',') if args.filename is not None else [args.filename]
+            ,'f'    :   args.filename if args.filename is not None else [args.filename]
             ,'c'    :   args.c
             ,'do'   :   args.do
             }
@@ -132,3 +133,5 @@ if __name__ ==  '__main__':
 
     # Call main()
     main()
+
+    print('\n')
