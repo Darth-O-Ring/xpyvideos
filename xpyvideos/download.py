@@ -46,7 +46,7 @@ def write_video_to_file(arg_dir, vid_file, f_name):
     # Open video file for downloading
     # Handle any potential video link errors
     try:
-        vid_file        =       urlopen(vid_file)
+        vid_file    =       urlopen(vid_file)
 
     # Catch any potential URL errors while opening the video link for download
     except (URLError, HTTPError):
@@ -64,7 +64,7 @@ def write_video_to_file(arg_dir, vid_file, f_name):
     # Grab byte info
     meta            =       vid_file.info()
     file_size       =       int(meta.getheaders("Content-Length")[0])
-    file_size_dl        =       0
+    file_size_dl    =       0
     block_size      =       8192
 
     # Open file for writing flv to
@@ -78,7 +78,7 @@ def write_video_to_file(arg_dir, vid_file, f_name):
             while True:
 
     # Read video files's block size into buffer
-                buffer          =       vid_file.read(block_size)
+                buffer      =       vid_file.read(block_size)
 
     # Break if empty buffer
                 if not buffer:
@@ -92,7 +92,7 @@ def write_video_to_file(arg_dir, vid_file, f_name):
 
     # Set download status for display using raw string
                 try:
-                    status      =       r'{0:10d} Bytes | {1:.1f}MB [{2:3.2f}%]   {3:.2f} Mb/s'.format(
+                    status      =       r'{0:10d} Bytes | {1:.1f}MB | Completed: [{2:3.2f}%]    Speed:  {3:.2f} Mb/s'.format(
                                                 file_size_dl, 
                                                 file_size_dl/1024/1024.0,
                                                 file_size_dl * 100.0 / file_size,
@@ -143,7 +143,7 @@ def download_video(args, url, f_name):
     # Open url and grab html information
     # Handle invalid URL errors
     try:
-        html            =       urlopen(url).read()
+        html        =       urlopen(url).read()
 
     # Catch URL exceptions
     except (URLError, HTTPError):
