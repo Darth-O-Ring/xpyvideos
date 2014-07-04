@@ -42,7 +42,7 @@ def print_status(progress, file_size, megabytes, start_time):
     """
 
     percent = progress * 100. / file_size
-    status = r"{0:10d}  Bytes | {1:.1f} MB [{2:3.2f}%]    {3:.2f} Mb/s".format(progress, megabytes, percent,
+    status = r"{0:10d}  Bytes | {1:.1f} MB | Completed: [{2:3.2f}%]     Speed:   {3:.2f} Mb/s".format(progress, progress/1024/1024.0, percent,
                                                                                 float(progress*8/2**20)/(time() - start_time))
     status = status + chr(8) * (len(status) + 1)
     print(status, end=' ')
