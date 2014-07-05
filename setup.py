@@ -14,7 +14,7 @@ import xpyvideos
 
 pathname                =               getcwd()
 
-VERSION                 =               '0.0.3-2'
+VERSION                 =               '0.0.3-3'
 
 copyfile("xpyvideos.py", "xpyvideos/xpyvideos")
 
